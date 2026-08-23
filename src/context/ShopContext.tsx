@@ -76,6 +76,12 @@ const CURRENCY_RATES = {
   GBP: { symbol: '£', rate: 0.79 },
 };
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+const apiUrl = (path: string) => {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return API_BASE_URL ? `${API_BASE_URL}${normalizedPath}` : normalizedPath;
+};
+
 export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Navigation state
   const [activeRoute, setActiveRoute] = useState<PageRoute>('home');
@@ -282,7 +288,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(apiUrl('/api/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -305,7 +311,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = async (fullName: string, email: string, password: string) => {
     try {
-      const response = await fetch('/api/auth/signup', {
+      const response = await fetch(apiUrl('/api/auth/signup'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fullName, email, password }),

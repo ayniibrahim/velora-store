@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
@@ -11,12 +12,34 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = Number(process.env.PORT) || 4000;
 const JWT_SECRET = process.env.JWT_SECRET || 'velora-secret-key';
-const dataDir = path.join(__dirname, 'data');
-const usersFile = path.join(dataDir, 'users.json');
-const ordersFile = path.join(dataDir, 'orders.json');
-const productsFile = path.join(dataDir, 'products.json');
+const dataDir = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : path.join(__dirname, 'data');
+const usersFile = process.env.USERS_FILE ? path.resolve(process.env.USERS_FILE) : path.join(dataDir, 'users.json');
+const ordersFile = process.env.ORDERS_FILE ? path.resolve(process.env.ORDERS_FILE) : path.join(dataDir, 'orders.json');
+const productsFile = process.env.PRODUCTS_FILE ? path.resolve(process.env.PRODUCTS_FILE) : path.join(dataDir, 'products.json');
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  process.env.FRONTEND_URL,
+  'https://*.vercel.app',
+].filter(Boolean).join(','))
+  .split(',')
+  .map((value) => value.trim())
+  .filter(Boolean)
+  .map((value) => value.replace(/\/$/, ''));
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+
+  return allowedOrigins.some((allowedOrigin) => {
+    if (allowedOrigin.includes('*')) {
+      const regex = new RegExp(`^${allowedOrigin.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\\\*/g, '.*')}$`);
+      return regex.test(origin);
+    }
+    return allowedOrigin === origin;
+  });
+};
 
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
@@ -193,7 +216,32 @@ const adminMiddleware = (req, res, next) => {
   next();
 };
 
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || isAllowedOrigin(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error(`Origin ${origin} is not allowed by CORS.`));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
+app.options('*', cors({
+  origin: (origin, callback) => {
+    if (!origin || isAllowedOrigin(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error(`Origin ${origin} is not allowed by CORS.`));
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 app.use(express.json());
 
 ensureAdminUser();

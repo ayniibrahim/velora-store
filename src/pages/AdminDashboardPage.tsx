@@ -40,6 +40,12 @@ interface AdminProduct {
 
 const statusOptions = ['Pending', 'Accepted', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+const apiUrl = (path: string) => {
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return API_BASE_URL ? `${API_BASE_URL}${normalizedPath}` : normalizedPath;
+};
+
 export const AdminDashboardPage: React.FC = () => {
   const { user, navigateTo } = useShop();
   const [stats, setStats] = useState<AdminStats | null>(null);
@@ -68,16 +74,16 @@ export const AdminDashboardPage: React.FC = () => {
 
     try {
       const [statsResponse, ordersResponse, customersResponse, productsResponse] = await Promise.all([
-        fetch('/api/admin/stats', {
+        fetch(apiUrl('/api/admin/stats'), {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch('/api/admin/orders', {
+        fetch(apiUrl('/api/admin/orders'), {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch('/api/admin/customers', {
+        fetch(apiUrl('/api/admin/customers'), {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch('/api/admin/products', {
+        fetch(apiUrl('/api/admin/products'), {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -107,7 +113,7 @@ export const AdminDashboardPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch(`/api/admin/orders/${orderId}/status`, {
+      const response = await fetch(apiUrl(`/api/admin/orders/${orderId}/status`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -133,7 +139,7 @@ export const AdminDashboardPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch(`/api/admin/orders/${orderId}/accept`, {
+      const response = await fetch(apiUrl(`/api/admin/orders/${orderId}/accept`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -160,7 +166,7 @@ export const AdminDashboardPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/admin/products', {
+      const response = await fetch(apiUrl('/api/admin/products'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -201,7 +207,7 @@ export const AdminDashboardPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch(`/api/admin/products/${productId}`, {
+      const response = await fetch(apiUrl(`/api/admin/products/${productId}`), {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
