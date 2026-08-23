@@ -1,0 +1,18 @@
+[
+  {
+    "id": "2631270a-c18e-4670-bb60-698d3264cd21",
+    "fullName": "Velora Admin",
+    "email": "admin@velora.com",
+    "passwordHash": "$2b$10$bMZbRcNLWcyW.BYXPWgcYeeOXjd2ENUeUz5fbINmCdmPs06Z0/2QK",
+    "role": "admin",
+    "createdAt": "2026-08-23T12:40:29.646Z"
+  },
+  {
+    "id": "71c8e7da-6acc-4462-b33b-8a7aad3cacbf",
+    "fullName": "ayni",
+    "email": "ayni1222@gmail.com",
+    "passwordHash": "$2b$10$ApmBCFhTrJuY1PTL88Q84.IPArmNuaFWPevvy/daso9K9Wi/1uonK",
+    "role": "customer",
+    "createdAt": "2026-08-23T12:44:48.189Z"
+  }
+]

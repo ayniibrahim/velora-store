@@ -1,0 +1,41 @@
+[
+  {
+    "id": "sofia-silk-blouse",
+    "name": "The Sofia Silk Blouse",
+    "brand": "VELORA COLLECTION",
+    "price": 395,
+    "category": "women",
+    "subcategory": "Tops & Blouses",
+    "stock": 18,
+    "featured": true,
+    "inStock": true,
+    "rating": 4.9,
+    "reviewsCount": 38
+  },
+  {
+    "id": "camel-tailored-coat",
+    "name": "The Camel Tailored Coat",
+    "brand": "VELORA ATELIER",
+    "price": 450,
+    "category": "outerwear",
+    "subcategory": "Coats & Jackets",
+    "stock": 9,
+    "featured": true,
+    "inStock": true,
+    "rating": 5,
+    "reviewsCount": 24
+  },
+  {
+    "id": "namola-maxima",
+    "name": "Namola Maxima Slip Dress",
+    "brand": "VELORA COLLECTION",
+    "price": 125,
+    "category": "women",
+    "subcategory": "Dresses",
+    "stock": 22,
+    "featured": false,
+    "inStock": true,
+    "rating": 4.8,
+    "reviewsCount": 24
+  }
+]

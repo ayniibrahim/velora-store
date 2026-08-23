@@ -1,0 +1,6 @@
+{
+  "name": "VELORA Luxury",
+  "description": "Curated luxury fashion e-commerce experience featuring quiet luxury apparel, accessories, shoes, beauty, editorial collections, and interactive shopping.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "ORD-1001",
+    "customer": "Amina Ali",
+    "email": "amina@example.com",
+    "total": 1245,
+    "status": "Accepted",
+    "date": "2026-08-20",
+    "items": 2
+  },
+  {
+    "id": "ORD-1002",
+    "customer": "Elias Noor",
+    "email": "elias@example.com",
+    "total": 890,
+    "status": "Cancelled",
+    "date": "2026-08-21",
+    "items": 1
+  },
+  {
+    "id": "ORD-1003",
+    "customer": "Lina Hassan",
+    "email": "lina@example.com",
+    "total": 1430,
+    "status": "Accepted",
+    "date": "2026-08-22",
+    "items": 3
+  }
+]
