@@ -51,11 +51,6 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full transition-all duration-300">
-      {/* Top Luxury Announcement Bar */}
-      <div className="bg-[#1b1c1a] text-[#fbf9f5] text-[11px] font-medium tracking-[0.2em] py-2 px-4 text-center uppercase flex items-center justify-center gap-4">
-        <span>COMPLIMENTARY EXPRESS GLOBAL DELIVERY • 10% OFF YOUR FIRST ACQUISITION — VELORA10</span>
-      </div>
-
       {/* Main Navbar */}
       <nav 
         className={`w-full transition-all duration-300 border-b ${
